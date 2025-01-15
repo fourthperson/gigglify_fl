@@ -12,5 +12,7 @@
   "category_programming": "Programming",
   "category_misc": "Miscellaneous",
   "done": "Done",
-  "history": "History"
+  "history": "History",
+  "history_empty": "Empty",
+  "history_error": "Error Loading History"
 }

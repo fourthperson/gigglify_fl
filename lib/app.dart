@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gigglify_fl/blocs/history/history_bloc.dart';
 import 'package:gigglify_fl/blocs/joke/joke_bloc.dart';
+import 'package:gigglify_fl/di/dependency_injector.dart';
 import 'package:gigglify_fl/l10n/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gigglify_fl/navigation/route_handler.dart';
-import 'package:gigglify_fl/repo/joke_repo.dart';
 
 class GigglifyApp extends StatefulWidget {
   final AppRouter appRouter = AppRouter();
@@ -48,7 +49,11 @@ class _GigglifyBlocProvider extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<JokeBloc>(
-          create: (context) => JokeBloc(JokeRepo()),
+          create: (context) => JokeBloc(DependencyInjector.instance.jokeRepo),
+        ),
+        BlocProvider<HistoryBloc>(
+          create: (context) =>
+              HistoryBloc(DependencyInjector.instance.jokeRepo),
         ),
       ],
       child: child,

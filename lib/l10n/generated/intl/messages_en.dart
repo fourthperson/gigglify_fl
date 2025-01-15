@@ -35,6 +35,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "category_spooky": MessageLookupByLibrary.simpleMessage("Spooky"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
         "history": MessageLookupByLibrary.simpleMessage("History"),
+        "history_empty": MessageLookupByLibrary.simpleMessage("Empty"),
+        "history_error":
+            MessageLookupByLibrary.simpleMessage("Error Loading History"),
         "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
         "usage_description": MessageLookupByLibrary.simpleMessage(
             "Press anywhere on the screen for another joke"),

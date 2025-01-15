@@ -4,11 +4,14 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gigglify_fl/blocs/history/history_bloc.dart';
 import 'package:gigglify_fl/blocs/joke/joke_bloc.dart';
 import 'package:gigglify_fl/config/theme.dart';
 import 'package:gigglify_fl/data/api/joke.dart';
 import 'package:gigglify_fl/l10n/generated/l10n.dart';
+import 'package:gigglify_fl/pages/modal/history.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -105,7 +108,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             _ActionButton(
                               iconData: Ionicons.time_outline,
-                              onTap: () {},
+                              onTap: () {
+                                _historyModal();
+                              },
                             ),
                           ],
                         ),
@@ -122,11 +127,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
             } else {
-              return Center(
-                child: Text(
-                  strings.usage_description1,
-                  style: textBold.copyWith(
-                    fontSize: 16,
+              return GestureDetector(
+                onTap: () =>
+                    BlocProvider.of<JokeBloc>(context).add(LoadJokeEvent()),
+                behavior: HitTestBehavior.opaque,
+                child: Center(
+                  child: Text(
+                    strings.usage_description1,
+                    style: textBold.copyWith(
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               );
@@ -135,6 +145,27 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void _historyModal() {
+    final Widget content = Material(
+      child: BlocProvider.value(
+        value: BlocProvider.of<HistoryBloc>(context),
+        child: HistoryModal(),
+      ),
+    );
+
+    if (Platform.isIOS) {
+      showCupertinoModalBottomSheet(
+        context: context,
+        builder: (_) => content,
+      );
+    } else {
+      showMaterialModalBottomSheet(
+        context: context,
+        builder: (_) => content,
+      );
+    }
   }
 }
 

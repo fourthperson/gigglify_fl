@@ -6,7 +6,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.6.1
+  #  sdk: ^3.6.1
+  sdk: '>=3.3.1 <4.0.0'
 
 dependencies:
   flutter:
@@ -22,23 +23,25 @@ dependencies:
     sdk: flutter
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
+  realm: ^20.0.1 # dart run realm generate
 
   # eye-candy
   cupertino_icons: ^1.0.8
   google_fonts: ^6.2.1
   intl: ^0.19.0
   ionicons: ^0.2.2
+  modal_bottom_sheet: ^3.0.0
   share_plus: ^10.1.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  auto_route_generator: ^9.3.1
+  auto_route_generator:
   build_runner: ^2.4.14 # dart run build_runner build --delete-conflicting-outputs
   flutter_lints: ^5.0.0
-  freezed: ^2.5.8
-  json_serializable: ^6.9.3
+  freezed:
+  json_serializable:
 
 flutter:
   uses-material-design: true

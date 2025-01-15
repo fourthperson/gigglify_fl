@@ -189,6 +189,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Empty`
+  String get history_empty {
+    return Intl.message(
+      'Empty',
+      name: 'history_empty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Error Loading History`
+  String get history_error {
+    return Intl.message(
+      'Error Loading History',
+      name: 'history_error',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
