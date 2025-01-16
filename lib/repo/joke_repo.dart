@@ -1,26 +1,28 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gigglify_fl/data/api/joke.dart';
 import 'package:gigglify_fl/data/db/schemas.dart';
-import 'package:realm/realm.dart';
+import 'package:gigglify_fl/repo/category_repo.dart';
+import 'package:gigglify_fl/services/db_service.dart';
+import 'package:gigglify_fl/services/rest_service.dart';
 
 class JokeRepo {
-  final Realm _realm;
-  final Dio _dio;
+  final RestService _restService;
+  final DbService _dbService;
+  final CategoryRepo _categoryRepo;
 
-  JokeRepo(this._realm, this._dio);
+  const JokeRepo(this._dbService, this._restService, this._categoryRepo);
 
   Future<Joke?> getJoke() async {
     try {
-      Response response = await _dio.get('Any');
-      if (response.statusCode == 200) {
-        String jsonString = response.data.toString();
-        Map<String, Object?> json = jsonDecode(jsonString);
-        Joke joke = Joke.fromJson(json);
+      String path = await _categoryRepo.getCategoriesPath();
+      String? json = await _restService.get(path: path);
+      if (json != null) {
+        Map<String, dynamic> decoded = jsonDecode(json);
+        Joke joke = Joke.fromJson(decoded);
         if (!joke.error) {
-          saveJoke(joke);
+          _saveJoke(joke);
           return joke;
         }
       }
@@ -30,23 +32,11 @@ class JokeRepo {
     return null;
   }
 
-  void saveJoke(Joke joke) {
-    String s = joke.type == 'twopart'
-        ? '${joke.setup}\n\n${joke.delivery}'
-        : joke.joke ?? '';
-
-    _realm.write<SavedJoke>(() {
-      return _realm.add(
-        SavedJoke(
-          DateTime.now().millisecondsSinceEpoch,
-          s,
-          joke.category,
-        ),
-      );
-    });
+  void _saveJoke(Joke joke) {
+    _dbService.saveJoke(joke);
   }
 
-  List<SavedJoke> savedJokes() {
-    return _realm.query<SavedJoke>('TRUEPREDICATE SORT(time DESC)').toList();
+  List<SavedJoke> getSavedJokes() {
+    return _dbService.savedJokes();
   }
 }

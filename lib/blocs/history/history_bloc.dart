@@ -6,6 +6,7 @@ import 'package:gigglify_fl/repo/joke_repo.dart';
 import 'package:share_plus/share_plus.dart';
 
 part 'history_state.dart';
+
 part 'history_event.dart';
 
 class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
@@ -18,7 +19,7 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
 
   void _loadHistory(LoadHistoryEvent event, Emitter<HistoryState> emit) {
     emit(HistoryLoadingState());
-    List<SavedJoke> jokes = _jokeRepo.savedJokes();
+    List<SavedJoke> jokes = _jokeRepo.getSavedJokes();
     emit(HistoryLoadedState(jokesList: jokes));
   }
 

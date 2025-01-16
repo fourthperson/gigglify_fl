@@ -4,12 +4,15 @@ import 'package:auto_route/annotations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gigglify_fl/blocs/category/category_bloc.dart';
 import 'package:gigglify_fl/blocs/history/history_bloc.dart';
 import 'package:gigglify_fl/blocs/joke/joke_bloc.dart';
 import 'package:gigglify_fl/config/theme.dart';
 import 'package:gigglify_fl/data/api/joke.dart';
+import 'package:gigglify_fl/di/dependency_injector.dart';
 import 'package:gigglify_fl/l10n/generated/l10n.dart';
 import 'package:gigglify_fl/pages/modal/history.dart';
+import 'package:gigglify_fl/pages/modal/preferences.dart';
 import 'package:ionicons/ionicons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -94,7 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             _ActionButton(
                               iconData: Ionicons.settings_outline,
-                              onTap: () {},
+                              onTap: () {
+                                _categoriesModal();
+                              },
                             ),
                             _ActionButton(
                               iconData: Ionicons.share_social_outline,
@@ -149,9 +154,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _historyModal() {
     final Widget content = Material(
-      child: BlocProvider.value(
-        value: BlocProvider.of<HistoryBloc>(context),
+      child: BlocProvider(
+        create: (BuildContext context) => HistoryBloc(
+          DependencyInjector.instance.jokeRepo,
+        ),
         child: HistoryModal(),
+      ),
+    );
+
+    if (Platform.isIOS) {
+      showCupertinoModalBottomSheet(
+        context: context,
+        builder: (_) => content,
+      );
+    } else {
+      showMaterialModalBottomSheet(
+        context: context,
+        builder: (_) => content,
+      );
+    }
+  }
+
+  void _categoriesModal() {
+    final Widget content = Material(
+      child: BlocProvider(
+        create: (BuildContext context) => CategoryBloc(
+          DependencyInjector.instance.categoryRepo,
+        ),
+        child: PreferenceModal(),
       ),
     );
 

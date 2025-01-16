@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gigglify_fl/blocs/history/history_bloc.dart';
 import 'package:gigglify_fl/blocs/joke/joke_bloc.dart';
 import 'package:gigglify_fl/di/dependency_injector.dart';
 import 'package:gigglify_fl/l10n/generated/l10n.dart';
@@ -46,16 +45,8 @@ class _GigglifyBlocProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<JokeBloc>(
-          create: (context) => JokeBloc(DependencyInjector.instance.jokeRepo),
-        ),
-        BlocProvider<HistoryBloc>(
-          create: (context) =>
-              HistoryBloc(DependencyInjector.instance.jokeRepo),
-        ),
-      ],
+    return BlocProvider(
+      create: (context) => JokeBloc(DependencyInjector.instance.jokeRepo),
       child: child,
     );
   }

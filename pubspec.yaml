@@ -21,9 +21,11 @@ dependencies:
   flutter_dotenv: ^5.2.1
   flutter_localizations:
     sdk: flutter
+  flutter_secure_storage: ^9.2.2
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
   realm: ^20.0.1 # dart run realm generate
+  shared_preferences: ^2.3.5
 
   # eye-candy
   cupertino_icons: ^1.0.8
