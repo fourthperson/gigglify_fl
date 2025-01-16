@@ -8,14 +8,6 @@ class PrefsService {
 
   static const String _hasRunBefore = 'hasRunBefore';
 
-  static String keyAny = 'Any';
-  static String keyDark = 'Dark';
-  static String keyPun = 'Pun';
-  static String keySpooky = 'Spooky';
-  static String keyChristmas = 'Christmas';
-  static String keyProgramming = 'Programming';
-  static String keyMisc = 'Miscellaneous';
-
   Future<void> clearOnReinstall() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? hasRunBefore = prefs.getBool(_hasRunBefore);
