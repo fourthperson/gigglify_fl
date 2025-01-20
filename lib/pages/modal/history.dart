@@ -30,27 +30,24 @@ class _HistoryModalState extends State<HistoryModal> {
   Widget build(BuildContext context) {
     S strings = S.of(context);
 
-    final format = DateFormat.yMd(Localizations.localeOf(context).languageCode);
-    bool is24h = MediaQuery.of(context).alwaysUse24HourFormat;
-    dateFormat = DateFormat(
-      '${format.pattern} ${is24h ? 'HH:mm:ss' : 'h:m:s a'}',
-    );
+    dateFormat = _loadDateFormat(context);
 
     return SafeArea(
       child: RawScrollbar(
         child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Center(
                 child: Text(
                   strings.history,
                   style: textBold.copyWith(fontSize: 20),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               BlocBuilder<HistoryBloc, HistoryState>(
                 builder: (BuildContext context, HistoryState state) {
                   if (state is HistoryLoadingState) {
@@ -70,24 +67,22 @@ class _HistoryModalState extends State<HistoryModal> {
                             iconColor: Colors.black,
                             message: strings.history_empty,
                           )
-                        : SingleChildScrollView(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: history.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (BuildContext context, int index) {
-                                SavedJoke joke = history[index];
-                                return _HistoryItem(
-                                  joke: joke,
-                                  dateFormat: dateFormat,
-                                  onTap: () {
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: history.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (BuildContext context, int index) {
+                              SavedJoke joke = history[index];
+
+                              return _HistoryItem(
+                                joke: joke,
+                                dateFormat: dateFormat,
+                                onTap: () =>
                                     BlocProvider.of<HistoryBloc>(context).add(
-                                      ShareHistoryEvent(joke: joke),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
+                                  ShareHistoryEvent(joke: joke),
+                                ),
+                              );
+                            },
                           );
                   } else {
                     return _Info(
@@ -102,6 +97,14 @@ class _HistoryModalState extends State<HistoryModal> {
           ),
         ),
       ),
+    );
+  }
+
+  DateFormat _loadDateFormat(BuildContext context) {
+    final format = DateFormat.yMd(Localizations.localeOf(context).languageCode);
+    bool is24h = MediaQuery.of(context).alwaysUse24HourFormat;
+    return DateFormat(
+      '${format.pattern} ${is24h ? 'HH:mm:ss' : 'h:m:s a'}',
     );
   }
 }

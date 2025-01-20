@@ -6,22 +6,17 @@ import 'package:gigglify_fl/l10n/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:gigglify_fl/navigation/route_handler.dart';
 
-class GigglifyApp extends StatefulWidget {
-  final AppRouter appRouter = AppRouter();
+class GigglifyApp extends StatelessWidget {
+  final AppRouter _appRouter = AppRouter();
 
   GigglifyApp({super.key});
 
-  @override
-  State<GigglifyApp> createState() => _GigglifyAppState();
-}
-
-class _GigglifyAppState extends State<GigglifyApp> {
   @override
   Widget build(BuildContext context) {
     return _GigglifyBlocProvider(
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        routerConfig: widget.appRouter.config(),
+        routerConfig: _appRouter.config(),
         localizationsDelegates: const [
           S.delegate,
           GlobalMaterialLocalizations.delegate,

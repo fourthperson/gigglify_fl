@@ -6,8 +6,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  #  sdk: ^3.6.1
-  sdk: '>=3.3.1 <4.0.0'
+    sdk: ^3.6.1
 
 dependencies:
   flutter:
@@ -17,7 +16,7 @@ dependencies:
   auto_route: ^9.3.0+1
   dio: ^5.7.0
   equatable: ^2.0.7
-  flutter_bloc: ^8.1.6
+  flutter_bloc: ^9.0.0
   flutter_dotenv: ^5.2.1
   flutter_localizations:
     sdk: flutter
@@ -39,7 +38,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  auto_route_generator:
+  auto_route_generator: # dart run build_runner build --delete-conflicting-outputs
   build_runner: ^2.4.14 # dart run build_runner build --delete-conflicting-outputs
   flutter_lints: ^5.0.0
   freezed:

@@ -18,13 +18,13 @@ class JokeRepo {
     try {
       String path = await _categoryRepo.getCategoriesPath();
       String? json = await _restService.get(path: path);
-      if (json != null) {
-        Map<String, dynamic> decoded = jsonDecode(json);
-        Joke joke = Joke.fromJson(decoded);
-        if (!joke.error) {
-          _saveJoke(joke);
-          return joke;
-        }
+      if (json == null) return null;
+
+      Map<String, dynamic> decoded = jsonDecode(json);
+      Joke joke = Joke.fromJson(decoded);
+      if (!joke.error) {
+        _saveJoke(joke);
+        return joke;
       }
     } catch (e) {
       debugPrint(e.toString());

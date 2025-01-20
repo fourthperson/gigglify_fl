@@ -27,7 +27,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    BlocProvider.of<JokeBloc>(context).add(LoadJokeEvent());
+    _loadJoke();
     super.initState();
   }
 
@@ -50,16 +50,14 @@ class _HomeScreenState extends State<HomeScreen> {
               bool isTwoPart = joke.type == 'twopart';
 
               return GestureDetector(
-                onTap: () {
-                  BlocProvider.of<JokeBloc>(context).add(LoadJokeEvent());
-                },
                 behavior: HitTestBehavior.opaque,
+                onTap: _loadJoke,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Center(
                         child: Text(
                           joke.category,
@@ -77,16 +75,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                 fontSize: 18,
                               ),
                             ),
-                            SizedBox(height: isTwoPart ? 10 : 0),
-                            isTwoPart
-                                ? Text(
-                                    joke.delivery ?? '',
-                                    textAlign: TextAlign.center,
-                                    style: textMedium.copyWith(
-                                      fontSize: 18,
-                                    ),
-                                  )
-                                : SizedBox.shrink(),
+                            if (isTwoPart) ...[
+                              const SizedBox(height: 10),
+                              Text(
+                                joke.delivery ?? '',
+                                textAlign: TextAlign.center,
+                                style: textMedium.copyWith(
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -97,30 +95,25 @@ class _HomeScreenState extends State<HomeScreen> {
                           children: [
                             _ActionButton(
                               iconData: Ionicons.settings_outline,
-                              onTap: () {
-                                _categoriesModal();
-                              },
+                              onTap: _categoriesModal,
                             ),
                             _ActionButton(
                               iconData: Ionicons.share_social_outline,
                               iconSize: 42,
                               color: Colors.purple,
-                              onTap: () {
-                                BlocProvider.of<JokeBloc>(context).add(
-                                  ShareJokeEvent(joke: joke),
-                                );
-                              },
+                              onTap: () =>
+                                  BlocProvider.of<JokeBloc>(context).add(
+                                ShareJokeEvent(joke: joke),
+                              ),
                             ),
                             _ActionButton(
                               iconData: Ionicons.time_outline,
-                              onTap: () {
-                                _historyModal();
-                              },
+                              onTap: _historyModal,
                             ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Center(
                         child: Text(
                           strings.usage_description,
@@ -133,9 +126,8 @@ class _HomeScreenState extends State<HomeScreen> {
               );
             } else {
               return GestureDetector(
-                onTap: () =>
-                    BlocProvider.of<JokeBloc>(context).add(LoadJokeEvent()),
                 behavior: HitTestBehavior.opaque,
+                onTap: _loadJoke,
                 child: Center(
                   child: Text(
                     strings.usage_description1,
@@ -152,39 +144,34 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  void _loadJoke() {
+    BlocProvider.of<JokeBloc>(context).add(LoadJokeEvent());
+  }
+
   void _historyModal() {
-    final Widget content = Material(
-      child: BlocProvider(
-        create: (BuildContext context) => HistoryBloc(
-          DependencyInjector.instance.jokeRepo,
-        ),
-        child: HistoryModal(),
+    final Widget content = BlocProvider(
+      create: (BuildContext context) => HistoryBloc(
+        DependencyInjector.instance.jokeRepo,
       ),
+      child: HistoryModal(),
     );
 
-    if (Platform.isIOS) {
-      showCupertinoModalBottomSheet(
-        context: context,
-        builder: (_) => content,
-      );
-    } else {
-      showMaterialModalBottomSheet(
-        context: context,
-        builder: (_) => content,
-      );
-    }
+    _modal(content);
   }
 
   void _categoriesModal() {
-    final Widget content = Material(
-      child: BlocProvider(
-        create: (BuildContext context) => CategoryBloc(
-          DependencyInjector.instance.categoryRepo,
-        ),
-        child: PreferenceModal(),
+    final Widget content = BlocProvider(
+      create: (BuildContext context) => CategoryBloc(
+        DependencyInjector.instance.categoryRepo,
       ),
+      child: PreferenceModal(),
     );
 
+    _modal(content);
+  }
+
+  void _modal(Widget content) {
+    content = Material(child: content);
     if (Platform.isIOS) {
       showCupertinoModalBottomSheet(
         context: context,

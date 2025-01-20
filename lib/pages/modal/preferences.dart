@@ -40,39 +40,30 @@ class _PreferenceModalState extends State<PreferenceModal> {
     return SafeArea(
       child: RawScrollbar(
         child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Center(
                   child: Text(
                     strings.preferences,
                     style: textBold.copyWith(fontSize: 20),
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text(
                   strings.allowed_categories,
                   style: textRegular.copyWith(fontSize: 16),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 BlocBuilder<CategoryBloc, CategoryState>(
                   builder: (BuildContext context, CategoryState state) {
                     if (state is CategoriesLoadedState) {
                       List<bool> categories = state.categories;
-
-                      void onChanged(bool? checked, int index) {
-                        if (checked == null) return;
-                        BlocProvider.of<CategoryBloc>(context).add(
-                          CategoryChangeEvent(
-                            index: index,
-                            value: checked,
-                          ),
-                        );
-                      }
 
                       return ListView.builder(
                         padding: EdgeInsets.zero,
@@ -80,28 +71,12 @@ class _PreferenceModalState extends State<PreferenceModal> {
                         itemCount: categories.length,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: () => onChanged(!categories[index], index),
-                            leading: Platform.isIOS
-                                ? CupertinoCheckbox(
-                                    value: categories[index],
-                                    onChanged: (c) => onChanged(
-                                      c ?? false,
-                                      index,
-                                    ),
-                                    activeColor: Colors.purple,
-                                  )
-                                : Checkbox(
-                                    value: categories[index],
-                                    onChanged: (c) => onChanged(
-                                      c ?? false,
-                                      index,
-                                    ),
-                                    activeColor: Colors.purple,
-                                  ),
-                            title: Text(
-                              categoryTexts[index],
-                              style: textBold,
+                          return _CategoryItem(
+                            checked: categories[index],
+                            label: categoryTexts[index],
+                            onTap: (bool? checked) => _onCategoryChanged(
+                              checked ?? false,
+                              index,
                             ),
                           );
                         },
@@ -122,6 +97,49 @@ class _PreferenceModalState extends State<PreferenceModal> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _onCategoryChanged(bool checked, int index) {
+    BlocProvider.of<CategoryBloc>(context).add(
+      CategoryChangeEvent(
+        index: index,
+        value: checked,
+      ),
+    );
+  }
+}
+
+class _CategoryItem extends StatelessWidget {
+  final bool checked;
+  final String label;
+  final void Function(bool?) onTap;
+
+  const _CategoryItem({
+    required this.checked,
+    required this.label,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      onTap: () => onTap(!checked),
+      leading: Platform.isIOS
+          ? CupertinoCheckbox(
+              value: checked,
+              onChanged: (c) => onTap(c ?? false),
+              activeColor: Colors.purple,
+            )
+          : Checkbox(
+              value: checked,
+              onChanged: (c) => onTap(c ?? false),
+              activeColor: Colors.purple,
+            ),
+      title: Text(
+        label,
+        style: textBold,
       ),
     );
   }

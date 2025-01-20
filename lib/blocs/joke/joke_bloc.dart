@@ -6,6 +6,7 @@ import 'package:gigglify_fl/repo/joke_repo.dart';
 import 'package:share_plus/share_plus.dart';
 
 part 'joke_state.dart';
+
 part 'joke_event.dart';
 
 class JokeBloc extends Bloc<JokeEvent, JokeState> {
