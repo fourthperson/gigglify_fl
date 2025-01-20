@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gigglify_fl/blocs/joke/joke_bloc.dart';
-import 'package:gigglify_fl/di/dependency_injector.dart';
-import 'package:gigglify_fl/l10n/generated/l10n.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:gigglify_fl/navigation/route_handler.dart';
+import 'package:gigglify_fl/l10n/generated/l10n.dart';
+import 'package:gigglify_fl/main.dart';
+import 'package:gigglify_fl/presentation/blocs/joke/joke_bloc.dart';
+import 'package:gigglify_fl/presentation/navigation/route_handler.dart';
 
 class GigglifyApp extends StatelessWidget {
   final AppRouter _appRouter = AppRouter();
@@ -41,7 +41,7 @@ class _GigglifyBlocProvider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => JokeBloc(DependencyInjector.instance.jokeRepo),
+      create: (context) => locator<JokeBloc>(),
       child: child,
     );
   }
