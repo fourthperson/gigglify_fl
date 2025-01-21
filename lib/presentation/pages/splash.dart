@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:gigglify_fl/l10n/generated/l10n.dart';
+import 'package:gigglify_fl/presentation/l10n/generated/l10n.dart';
 import 'package:gigglify_fl/presentation/navigation/route_handler.gr.dart';
 import 'package:gigglify_fl/presentation/theme/theme.dart';
 

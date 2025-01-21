@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:gigglify_fl/l10n/generated/l10n.dart';
 import 'package:gigglify_fl/presentation/blocs/blocs_export.dart';
+import 'package:gigglify_fl/presentation/l10n/generated/l10n.dart';
 import 'package:gigglify_fl/presentation/theme/theme.dart';
 
 class PreferenceModal extends StatefulWidget {

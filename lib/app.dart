@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:gigglify_fl/l10n/generated/l10n.dart';
 import 'package:gigglify_fl/main.dart';
 import 'package:gigglify_fl/presentation/blocs/joke/joke_bloc.dart';
+import 'package:gigglify_fl/presentation/l10n/generated/l10n.dart';
 import 'package:gigglify_fl/presentation/navigation/route_handler.dart';
 
 class GigglifyApp extends StatelessWidget {

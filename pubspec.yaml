@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # core
   auto_route: ^9.3.0+1
@@ -18,8 +20,6 @@ dependencies:
   equatable: ^2.0.7
   flutter_bloc: ^9.0.0
   flutter_dotenv: ^5.2.1
-  flutter_localizations:
-    sdk: flutter
   flutter_secure_storage: ^9.2.2
   freezed_annotation: ^2.4.4
   get_it: ^8.0.3
@@ -53,4 +53,5 @@ flutter:
 
 flutter_intl:
   enabled: true
-  output_dir: lib/l10n/generated
+  arb_dir: lib/presentation/l10n/
+  output_dir: lib/presentation/l10n/generated

@@ -34,7 +34,7 @@ analyzer:
   exclude:
     - "**/**.g.dart"
     - "**/**.freezed.dart"
-    - "lib/l10n/*"
+    - "lib/presentation/l10n/*"
     - "lib/app/*"
   errors:
     todo: ignore
