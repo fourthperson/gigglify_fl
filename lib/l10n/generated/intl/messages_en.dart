@@ -22,26 +22,29 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "allowed_categories":
-            MessageLookupByLibrary.simpleMessage("Allowed categories"),
-        "app_name": MessageLookupByLibrary.simpleMessage("Gigglify"),
-        "category_any": MessageLookupByLibrary.simpleMessage("Any"),
-        "category_christmas": MessageLookupByLibrary.simpleMessage("Christmas"),
-        "category_dark": MessageLookupByLibrary.simpleMessage("Dark"),
-        "category_misc": MessageLookupByLibrary.simpleMessage("Miscellaneous"),
-        "category_programming":
-            MessageLookupByLibrary.simpleMessage("Programming"),
-        "category_pun": MessageLookupByLibrary.simpleMessage("Pun"),
-        "category_spooky": MessageLookupByLibrary.simpleMessage("Spooky"),
-        "done": MessageLookupByLibrary.simpleMessage("Done"),
-        "history": MessageLookupByLibrary.simpleMessage("History"),
-        "history_empty": MessageLookupByLibrary.simpleMessage("Empty"),
-        "history_error":
-            MessageLookupByLibrary.simpleMessage("Error Loading History"),
-        "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
-        "usage_description": MessageLookupByLibrary.simpleMessage(
-            "Press anywhere on the screen for another joke"),
-        "usage_description1": MessageLookupByLibrary.simpleMessage(
-            "Tap the screen to load a joke")
-      };
+    "allowed_categories": MessageLookupByLibrary.simpleMessage(
+      "Allowed categories",
+    ),
+    "app_name": MessageLookupByLibrary.simpleMessage("Gigglify"),
+    "category_any": MessageLookupByLibrary.simpleMessage("Any"),
+    "category_christmas": MessageLookupByLibrary.simpleMessage("Christmas"),
+    "category_dark": MessageLookupByLibrary.simpleMessage("Dark"),
+    "category_misc": MessageLookupByLibrary.simpleMessage("Miscellaneous"),
+    "category_programming": MessageLookupByLibrary.simpleMessage("Programming"),
+    "category_pun": MessageLookupByLibrary.simpleMessage("Pun"),
+    "category_spooky": MessageLookupByLibrary.simpleMessage("Spooky"),
+    "done": MessageLookupByLibrary.simpleMessage("Done"),
+    "history": MessageLookupByLibrary.simpleMessage("History"),
+    "history_empty": MessageLookupByLibrary.simpleMessage("Empty"),
+    "history_error": MessageLookupByLibrary.simpleMessage(
+      "Error Loading History",
+    ),
+    "preferences": MessageLookupByLibrary.simpleMessage("Preferences"),
+    "usage_description": MessageLookupByLibrary.simpleMessage(
+      "Press anywhere on the screen for another joke",
+    ),
+    "usage_description1": MessageLookupByLibrary.simpleMessage(
+      "Tap the screen to load a joke",
+    ),
+  };
 }

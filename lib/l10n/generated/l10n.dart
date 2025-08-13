@@ -18,8 +18,10 @@ class S {
   static S? _current;
 
   static S get current {
-    assert(_current != null,
-        'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.');
+    assert(
+      _current != null,
+      'No instance of S was loaded. Try to initialize the S delegate before accessing S.current.',
+    );
     return _current!;
   }
 
@@ -41,8 +43,10 @@ class S {
 
   static S of(BuildContext context) {
     final instance = S.maybeOf(context);
-    assert(instance != null,
-        'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?');
+    assert(
+      instance != null,
+      'No instance of S present in the widget tree. Did you add S.delegate in localizationsDelegates?',
+    );
     return instance!;
   }
 
@@ -52,12 +56,7 @@ class S {
 
   /// `Gigglify`
   String get app_name {
-    return Intl.message(
-      'Gigglify',
-      name: 'app_name',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Gigglify', name: 'app_name', desc: '', args: []);
   }
 
   /// `Press anywhere on the screen for another joke`
@@ -82,12 +81,7 @@ class S {
 
   /// `Preferences`
   String get preferences {
-    return Intl.message(
-      'Preferences',
-      name: 'preferences',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Preferences', name: 'preferences', desc: '', args: []);
   }
 
   /// `Allowed categories`
@@ -102,42 +96,22 @@ class S {
 
   /// `Any`
   String get category_any {
-    return Intl.message(
-      'Any',
-      name: 'category_any',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Any', name: 'category_any', desc: '', args: []);
   }
 
   /// `Dark`
   String get category_dark {
-    return Intl.message(
-      'Dark',
-      name: 'category_dark',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Dark', name: 'category_dark', desc: '', args: []);
   }
 
   /// `Pun`
   String get category_pun {
-    return Intl.message(
-      'Pun',
-      name: 'category_pun',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Pun', name: 'category_pun', desc: '', args: []);
   }
 
   /// `Spooky`
   String get category_spooky {
-    return Intl.message(
-      'Spooky',
-      name: 'category_spooky',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Spooky', name: 'category_spooky', desc: '', args: []);
   }
 
   /// `Christmas`
@@ -172,32 +146,17 @@ class S {
 
   /// `Done`
   String get done {
-    return Intl.message(
-      'Done',
-      name: 'done',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Done', name: 'done', desc: '', args: []);
   }
 
   /// `History`
   String get history {
-    return Intl.message(
-      'History',
-      name: 'history',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('History', name: 'history', desc: '', args: []);
   }
 
   /// `Empty`
   String get history_empty {
-    return Intl.message(
-      'Empty',
-      name: 'history_empty',
-      desc: '',
-      args: [],
-    );
+    return Intl.message('Empty', name: 'history_empty', desc: '', args: []);
   }
 
   /// `Error Loading History`
@@ -215,9 +174,7 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
   const AppLocalizationDelegate();
 
   List<Locale> get supportedLocales {
-    return const <Locale>[
-      Locale.fromSubtags(languageCode: 'en'),
-    ];
+    return const <Locale>[Locale.fromSubtags(languageCode: 'en')];
   }
 
   @override
